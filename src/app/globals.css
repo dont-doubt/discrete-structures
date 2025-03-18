@@ -40,3 +40,7 @@
     appearance: textfield;
   }
 }
+
+body {
+  height: 100vh;
+}
