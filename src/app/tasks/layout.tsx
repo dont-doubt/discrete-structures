@@ -14,7 +14,7 @@ function NavLink({href, children, isSelected, onClick}: {
   onClick: () => void,
 } & Children) {
   return (
-    <Link href={href} className={cn("py-3 pl-16 w-full border-l-1 border-zinc-800 text-zinc-400 transition-all duration-200 hover:bg-zinc-800", isSelected ? "text-white border-emerald-600 bg-zinc-800/30 border-l-2 hover:bg-zinc-700" : "hover:border-emerald-400 hover:text-white")} onClick={onClick}>
+    <Link href={href} className={cn("py-5 pl-16 w-full border-l-1 border-zinc-800 text-zinc-400 transition-all duration-200 hover:bg-zinc-800", isSelected ? "text-white border-emerald-600 bg-zinc-800/30 border-l-2 hover:bg-zinc-700" : "hover:border-emerald-400 hover:text-white")} onClick={onClick}>
       {children}
     </Link>
   )
@@ -59,15 +59,18 @@ function Navigation({selected, setSelected, setHidden}: {
 
 function Main({selected, hidden, children}: {selected: string, hidden: boolean} & Children) {
   return (
-    <motion.main
-      key={selected}
-      initial={{ opacity: 1 }}
-      animate={{ opacity: hidden ? 0.4 : 1 }}
-      transition={{ duration: 0.3, ease: 'circInOut' }}
-      className="flex flex-col w-1050 mx-auto mt-100 prose prose-invert prose-slate"
-    >
-      {children}
-    </motion.main>
+    <div className="flex flex-col w-full relative pb-300">
+      <div className="absolute inset-x-0 top-0 h-screen bg-gradient-to-b from-emerald-400/[2%] via-50% via-indigo-800/[2%] to-black/0" />
+      <motion.main
+        key={selected}
+        initial={{ opacity: 1 }}
+        animate={{ opacity: hidden ? 0.4 : 1 }}
+        transition={{ duration: 0.3, ease: 'circInOut' }}
+        className="flex flex-col min-w-700 mx-auto mt-100 prose prose-invert prose-slate"
+      >
+        {children}
+      </motion.main>
+    </div>
   )
 }
 
@@ -92,7 +95,7 @@ export default function TaskLayout({children}: Children) {
         </div>
       </div>
       <div className="flex flex-col w-full">
-        <div className="h-56 border-b-1 border-white/5 w-full flex justify-between px-32 backdrop-blur-sm fixed">
+        <div className="h-56 border-b-1 border-white/5 w-full flex justify-between px-32 backdrop-blur-sm fixed z-10 bg-zinc-900/20">
           <div className="flex"></div>
           <div className="flex gap-32"></div>
         </div>
