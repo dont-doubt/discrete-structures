@@ -1,11 +1,12 @@
 'use client'
 
-import { Children } from '@/utils/types';
+import { Children, Setter } from '@/utils/types';
 import Link from 'next/link';
 import Logo from '@/components/logo';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/utils';
 import { useLayoutEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 
 function NavLink({href, children, isSelected, onClick}: {
   href: string,
@@ -30,16 +31,24 @@ function NavContainer({title, children}: {title: string} & Children) {
   )
 }
 
-function Navigation() {
-  const [selected, setSelected] = useState('');
-  const path = usePathname();
-  useLayoutEffect(() => setSelected(path), [path]);
-
+function Navigation({selected, setSelected, setHidden}: {
+  selected: string,
+  setSelected: Setter<string>,
+  setHidden: Setter<boolean>,
+}) {
   return (
     <nav className="flex flex-col mt-100">
       <NavContainer title="Задания">
         {Array.from({length: 12}, (_, i) => [i, `/tasks/${i + 1}`] as const).map(([i, path]) => (
-          <NavLink href={path} key={path} isSelected={path === selected} onClick={() => setSelected(path)}>
+          <NavLink
+            href={path}
+            key={path}
+            isSelected={path === selected}
+            onClick={() => {
+              setHidden(true);
+              setSelected(path);
+            }}
+          >
             Задание {i + 1}
           </NavLink>
         ))}
@@ -48,16 +57,38 @@ function Navigation() {
   )
 }
 
-export default function TaskLayout({children}: Children) {
+function Main({selected, hidden, children}: {selected: string, hidden: boolean} & Children) {
   return (
-    <main className="w-full min-h-screen bg-zinc-900 text-white flex">
+    <motion.main
+      key={selected}
+      initial={{ opacity: 1 }}
+      animate={{ opacity: hidden ? 0.4 : 1 }}
+      transition={{ duration: 0.3, ease: 'circInOut' }}
+      className="flex flex-col w-1050 mx-auto mt-100 prose prose-invert prose-slate"
+    >
+      {children}
+    </motion.main>
+  )
+}
+
+export default function TaskLayout({children}: Children) {
+  const [selected, setSelected] = useState('');
+  const [hidden, setHidden] = useState(true);
+  const path = usePathname();
+  useLayoutEffect(() => {
+    setSelected(path);
+    setHidden(false);
+  }, [path]);
+
+  return (
+    <div className="w-full min-h-screen bg-zinc-900 text-white flex">
       <div className="border-r-1 border-white/10 min-w-330">
         <div className="flex flex-col w-full h-screen fixed max-w-330 px-24">
           <Link className="h-56 flex items-center transition-opacity opacity-80 hover:opacity-100 gap-6" href="/">
             <Logo className="text-emerald-200 size-30" />
             <p className="text-zinc-400 font-medium tracking-wide">Дискретные структуры</p>
           </Link>
-          <Navigation />
+          <Navigation selected={selected} setSelected={setSelected} setHidden={setHidden} />
         </div>
       </div>
       <div className="flex flex-col w-full">
@@ -65,10 +96,8 @@ export default function TaskLayout({children}: Children) {
           <div className="flex"></div>
           <div className="flex gap-32"></div>
         </div>
-        <div className="flex flex-col w-1050 mx-auto mt-150">
-          {children}
-        </div>
+        <Main selected={selected} hidden={hidden}>{children}</Main>
       </div>
-    </main>
+    </div>
   )
 }
