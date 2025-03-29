@@ -1,6 +1,13 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+@font-face {
+  font-family: 'TransgenderGrotesk-R';
+  src: url('https://static.tildacdn.com/tild6532-3066-4866-a231-633439376637/TransgenderGrotesk-R.woff2') format('woff2'),url('https://static.tildacdn.com/tild3033-3833-4634-a161-363032336635/TransgenderGrotesk-R.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
 @theme {
   --spacing: 0.0625rem; /* 1px */
 
@@ -18,11 +25,16 @@
   --color-primary-950: #4A0303;
 
   --font-family-inter: var(--font-inter);
+  --font-family-grotesk: 'TransgenderGrotesk-R';
 }
 
 @layer base {
   * {
     -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    color-scheme: dark;
   }
 
   body {
