@@ -1,5 +1,5 @@
 
-export function assert(value: boolean, error: string = "Неизвестная ошибка") {
+export function assert(value: boolean, error?: string) {
   if (!value) throw new Error(error);
 }
 
@@ -19,7 +19,7 @@ export function assertBooleanVector(value: string | number[]) {
   }
 }
 
-export function assertBooleanResiduals(zeroResidual: string, oneResidual:string, argumentIndex: number) {
+export function assertBooleanResiduals(zeroResidual: string, oneResidual: string, argumentIndex: number) {
   assert(zeroResidual.length !== 0 && oneResidual.length !== 0, "Векторы не должны быть пустыми")
   assert(zeroResidual.length === oneResidual.length, "Векторы должны быть одинаковой длины")
   assert((2*zeroResidual.length & (2*zeroResidual.length - 1)) === 0, "Векторы записаны некорректно")

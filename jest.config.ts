@@ -9,7 +9,7 @@ const createJestConfig = nextJest({
 const config: Config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
-  testMatch: ['**/src/tasks/task[0-9]+.[jt]s?(x)'],
+  testMatch: ['**/src/tasks/tests/task[0-9]+.test.[jt]s?(x)'],
 }
 
 export default createJestConfig(config)
