@@ -77,7 +77,7 @@ function Main({selected, hidden, children}: {selected: string, hidden: boolean} 
         initial={{ opacity: 1 }}
         animate={{ opacity: hidden ? 0.4 : 1 }}
         transition={{ duration: 0.3, ease: 'circInOut' }}
-        className="flex flex-col min-w-700 mx-auto mt-170 prose prose-invert prose-slate max-lg:min-w-0 max-lg:px-30 z-10"
+        className="flex flex-col min-w-700 mx-auto mt-170 prose prose-invert prose-slate max-lg:min-w-0 max-lg:px-30 z-10 max-lg:prose-lg max-lg:text-wrap"
       >
         {children}
       </motion.main>
