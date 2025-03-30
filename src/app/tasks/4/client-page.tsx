@@ -15,7 +15,7 @@ export default function Task4Form() {
 
   const handleGenerate = safe(() => {
     setVector(randomInt(0, 15));
-    setSelected();
+    setSelected(undefined);
   });
 
   const handleClick = safe(() => {
