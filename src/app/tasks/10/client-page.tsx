@@ -1,35 +1,68 @@
 'use client'
 
+import { useState } from 'react';
+import { randomInt, safe } from '@/utils';
+import CustomButton from '@/components/custom-button';
+import { solveTask1 } from '@/tasks/task1';
+import { toast } from 'sonner';
+import { solveTask10 } from '@/tasks/task10';
+import { Selectable } from '@/components/selectable';
+
 export default function Task10Form() {
+  const [vector, setVector] = useState('');
+  const [T0, setT0] = useState(false);
+  const [T1, setT1] = useState(false);
+  const [S, setS] = useState(false);
+  const [M, setM] = useState(false);
+  const [L, setL] = useState(false);
+
+  const handleGenerate = safe(() => {
+    setVector(solveTask1(randomInt(2, 5)));
+    setT0(false);
+    setT1(false);
+    setS(false);
+    setM(false);
+    setL(false);
+  });
+
+  const handleClick = safe(() => {
+    const classes = solveTask10(vector);
+    let good = true;
+    if (good && (T0 ? !classes.includes('T0') : classes.includes('T0'))) good = false;
+    if (good && (T1 ? !classes.includes('T1') : classes.includes('T1'))) good = false;
+    if (good && (S ? !classes.includes('S') : classes.includes('S'))) good = false;
+    if (good && (M ? !classes.includes('M') : classes.includes('M'))) good = false;
+    if (good && (L ? !classes.includes('L') : classes.includes('L'))) good = false;
+    if (good) {
+      toast.success('Правильно!');
+    } else {
+      toast.warning('Неверно!', {
+        description: 'Попробуйте снова',
+      });
+    }
+  });
+
   return (
     <>
       <h1>Задание 10</h1>
-      Система предлагает вектор булевой функции.
-      Под полем с вектором должен быть столбец из T0, T1, S, L, M (предполные классы).
-      Пользователь должен выбрать предполные классы, к которым принадлежит функция.
-      В итоге система должна определить правильно выбраны классы или нет.
+      <h2>Система предлагает вектор булевой функции. Пользователь должен выбрать предполные классы, к которым принадлежит функция</h2>
 
-      На странице должны быть:
+      <CustomButton onClick={handleGenerate}>Начать</CustomButton>
 
-      -	Поле с описанием задания «Выберите к какими предполным классам относится булева функция»;
-      -	Поле с вектором булевой функции;
-      -	Поле вывода (можно похвалить пользователя и вывести «Молодец!» если он выбрал правильные классы, в противном случае написать «Неправильно, попробуй еще раз»);
-      -	Столбец:
-      T0 – класс функций, сохраняющих ноль; (можно написать просто T0, а при наведении появится пояснение «Класс функций, сохраняющих ноль»)
-      T1 – класс функций, сохраняющих единицу;
-      S – класс самодвойственных функций;
-      L – класс линейных функций;
-      M – класс монотонных функций.
-
-      Пользователь может выбрать сразу несколько классов, а может не выбрать ни одного.
-
-      -	Кнопка «Проверить»;
-      -	Кнопка «Новая функция» (генерирует новую булеву функцию и сбрасывает ответы пользователя);
-      -	Кнопка «На главную страницу» (или «Назад», либо сделать в виде стрелочки);
-
-      После нажатия на кнопку «Проверить» правильные ответы пользователя можно выделить зеленым цветом, а неправильные – красным. (Если он нажал на класс, которому функция не относится – красным, если он не выбрал класс, к которому функция относится – красным, в остальных случаях – зеленым).
-
-      Функция solveTask10 в task10.ts получает на вход вектор булевой функции в виде строки и выводит строку из классов (например 'T0 T1 S L M'), если строка пустая, то функция не принадлежит ни одному из классов. Тут надо будет поработать с результатом функции, чтобы проверить ответы пользователя.
+      {vector && (
+        <>
+          <h2 className="!pt-100">Выберите предполные классы</h2>
+          <pre>{vector}</pre>
+          <div className="flex flex-wrap gap-4">
+            <Selectable value={T0} setValue={setT0}>T0</Selectable>
+            <Selectable value={T1} setValue={setT1}>T1</Selectable>
+            <Selectable value={S} setValue={setS}>S</Selectable>
+            <Selectable value={M} setValue={setM}>M</Selectable>
+            <Selectable value={L} setValue={setL}>L</Selectable>
+          </div>
+          <CustomButton onClick={handleClick}>Проверить</CustomButton>
+        </>
+      )}
     </>
   )
 }

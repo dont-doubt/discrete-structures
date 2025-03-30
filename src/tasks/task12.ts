@@ -7,8 +7,8 @@ export function solveTask12(vector: string) {
   const glSets: string[] = glueSets(grSets);
   const glRes: string[] = glueRes(glSets);
   const setsMinDNF: string[] = minimalCover(glRes, sets1);
-  const minDNF: string =  formatDNF(setsMinDNF);
-  return minDNF;
+  const minDNF: string = formatDNF(setsMinDNF);
+  return minDNF === '()' ? '1' : minDNF;
 }
 
 // Возьмем как пример вектор '0001110101011100'

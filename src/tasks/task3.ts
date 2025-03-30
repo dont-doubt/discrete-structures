@@ -7,11 +7,11 @@ export function solveTask3(zeroResidual: string, oneResidual: string, argumentIn
   for (let i = 1; i < argumentIndex; i++) {
     len = len >> 1; // Делим на 2
   }
-  for(let i = 0; i < zeroResidual.length; i+=len) {
-    for(let j = i; j < i+len; j++) {
+  for (let i = 0; i < zeroResidual.length; i += len) {
+    for (let j = i; j < i + len; j++) {
       res += zeroResidual[j];
     }
-    for(let j = i; j < i+len; j++) {
+    for (let j = i; j < i + len; j++) {
       res += oneResidual[j];
     }
   }

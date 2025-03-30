@@ -23,3 +23,9 @@ export function stringifyVector(vector: (boolean | number)[]): string {
 export function parseVector(vector: string): number[] {
   return vector.split('').map((v) => v === '1' ? 1 : 0);
 }
+
+export function randomInt(min: number, max: number) {
+  if (min == max) return min;
+  if (min > max) [min, max] = [max, min];
+  return ~~(min + (max - min + 1) * Math.random());
+}
