@@ -44,7 +44,7 @@ export default function Task6Form() {
             <li>Пробелы ставить не нужно</li>
             <li>Пример: <b>(x1*x2)v(x2*-x3)</b></li>
           </ul>
-          <CustomInput placeholder="Введите ДНФ" value={userInput} setValue={setUserInput} regex={/^[vx12345()-* ]*$/} />
+          <CustomInput placeholder="Введите ДНФ" value={userInput} setValue={setUserInput} regex={/^[vx12345()\-* ]*$/} />
           <CustomButton onClick={handleClick}>Проверить</CustomButton>
         </>
       )}
