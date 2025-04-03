@@ -47,7 +47,7 @@ export default function Task3Form() {
       <ul>
         <li>Для <b>x<sub>n</sub></b> аргумента, введите <b>n</b></li>
         <li>Номер указанного аргумента - целое положительное число</li>
-        <li>Номер указанного аргумента не должен превышать количество аргументов остаточных</li>
+        <li>Ограничение: не может содержать более <b>5</b> аргументов</li>
       </ul>
       <CustomNumberInput placeholder="Введите номер остаточной" value={argIndex} setValue={setArgIndex} min={1} />
 
