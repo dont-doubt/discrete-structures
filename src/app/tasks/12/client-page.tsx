@@ -5,7 +5,6 @@ import { safe } from '@/utils';
 import CustomButton from '@/components/custom-button';
 import CustomInput from '@/components/custom-input';
 import Results from '@/components/results';
-
 import { solveTask12OnServer } from '@/app/tasks/12/server-actions';
 import { assertBooleanVector } from '@/utils/asserts';
 

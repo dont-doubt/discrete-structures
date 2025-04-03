@@ -13,7 +13,6 @@ export function solveTask12(vector: string) {
 
 // Возьмем как пример вектор '0001110101011100'
 
-// Функция, которая возвращает массив из наборов, на которых функция возвращает 1
 function setsOne(vector: string): string[] {
   const len = vector.length;
   const n = Math.log2(len);
@@ -24,23 +23,21 @@ function setsOne(vector: string): string[] {
       stsOne.push(binaryStr);
     }
   }
-  return stsOne; // ['0011', '0100', '0101', '0111', '1001', '1011', '1100', '1101']
+  return stsOne;
 }
 
-// Функция, которая разбивает наборы на группы по весу (количеству единиц)
 function groupSet(sets1: string[]): string[][] {
   const grSt: string[][] = [];
   for (const st of sets1) {
-    const cnt = countOnes(st); // Количество '1'
-    if (!grSt[cnt]) { // Если подмассива для этого cnt ещё нет, создаём его
+    const cnt = countOnes(st);
+    if (!grSt[cnt]) {
       grSt[cnt] = [];
     }
     grSt[cnt].push(st);
   }
-  return grSt.filter(group => group !== undefined); // [['0100'], ['0011', '0101', '1001', '1100'], ['0111', '1011', '1101']]
+  return grSt.filter(group => group !== undefined);
 }
 
-// Функция, которая находит вес набора
 function countOnes(str: string): number {
   let count = 0;
   for (const char of str) {
@@ -49,12 +46,11 @@ function countOnes(str: string): number {
   return count;
 }
 
-// Функция, которая склеивает соседние наборы (первый раз)
 function glueSets(groupSet: string[][] ): string[] {
-  const glSets: string[] =[];
+  const glSets: string[] = [];
   for (let i = 0; i < groupSet.length-1; i++) {
-    for (let j = 0; j < groupSet[i].length; j++) { // 0
-      for (let k = 0; k < groupSet[i+1].length; k++) { // 0..4
+    for (let j = 0; j < groupSet[i].length; j++) {
+      for (let k = 0; k < groupSet[i+1].length; k++) {
         if (adjacentSets(groupSet[i][j], groupSet[i+1][k])) {
           let g: string = '';
           for(let char = 0; char < groupSet[i][j].length; char++) {
@@ -66,10 +62,9 @@ function glueSets(groupSet: string[][] ): string[] {
       }
     }
   }
-  return glSets; // ['010-', '-100', '0-11', '-011', '01-1', '-101', '10-1', '1-01', '110-']
+  return glSets;
 }
 
-// Функция, которая проверяет являются ли наборы соседними
 function adjacentSets (first: string, second: string): boolean {
   let cnt: number = 0;
   const len = first.length;
@@ -80,9 +75,8 @@ function adjacentSets (first: string, second: string): boolean {
   return true;
 }
 
-// Функция, которая склеивает соседние наборы (рекурсивно)
 function glueRes(glSets: string[]): string[] {
-  const groupGlueSets: string[][] = []; // [['-100', '-011', '-101'], ['0-11', '1-01'], ['01-1', '10-1'], ['010-', '110-']]
+  const groupGlueSets: string[][] = [];
   for (const g of glSets) {
     for (let i = 0; i < g.length; i++) {
       if(g[i] === '-') {
@@ -98,52 +92,72 @@ function glueRes(glSets: string[]): string[] {
     for (let i = 0; i < group.length-1; i++) {
       for (let j = i+1; j < group.length; j++) {
         if(adjacentSets(group[i], group[j])) {
-          glRes = glRes.filter(gl => gl !== group[i]); // удаляем используемый для склейки набор
-          glRes = glRes.filter(gl => gl !== group[j]); // удаляем используемый для склейки набор
+          glRes = glRes.filter(gl => gl !== group[i]);
+          glRes = glRes.filter(gl => gl !== group[j]);
           let g: string = '';
           for(let char = 0; char < group[i].length; char++) {
             if(group[i][char] === group[j][char]) g += group[i][char];
             else g += '-';
           }
-          if(!glRes.includes(g)) glRes.push(g); // если нет такой склейки
+          if(!glRes.includes(g)) glRes.push(g);
           flag = true;
         }
       }
     }
   }
   if(flag) return glueRes(glRes);
-  return glRes; // ['0-11', '-011', '01-1', '10-1', '1-01', '-10-']
+  return glRes;
 }
 
-// Функция, которая находит минимальное покрытие
+// Новая версия minimalCover с использованием битовых масок и мемоизации
 function minimalCover(glRes: string[], sets1: string[]): string[] {
-  // Если нет склеек, используем исходные наборы
+  // Если нет склеек, возвращаем исходные наборы
   if (glRes.length === 0) {
     return sets1;
   }
-  let minCover: string[] = [];
-  function backtrack(current: string[], index: number, covered: Set<number>) { // current - текущий набор импликант, covered - покрытые наборы (множество индексов)
-    if (minCover.length && current.length >= minCover.length) return;
-    if (covered.size === sets1.length) {
-      if (!minCover.length || current.length < minCover.length) {
-        minCover = [...current];
+
+  const n = sets1.length;
+  const fullMask = (1 << n) - 1;
+
+  // Для каждого импликанта вычисляем битовую маску покрытых наборов
+  const implicants = glRes.map(imp => {
+    let mask = 0;
+    for (let i = 0; i < sets1.length; i++) {
+      if (isCovered(sets1[i], imp)) mask |= (1 << i);
+    }
+    return { imp, mask };
+  });
+
+  let bestSolution: string[] | null = null;
+  const memo = new Map<number, number>(); // сохраняем минимальное количество импликант для данной маски
+
+  function dfs(currentMask: number, start: number, current: string[]): void {
+    if (currentMask === fullMask) {
+      if (bestSolution === null || current.length < bestSolution.length) {
+        bestSolution = [...current];
       }
       return;
     }
-    for (let i = index; i < glRes.length; i++) {
-      const imp = glRes[i];
-      const newCovered = new Set(covered);
-      sets1.forEach((set, idx) => {
-        if (isCovered(set, imp)) newCovered.add(idx);
-      });
-      backtrack([...current, imp], i + 1, newCovered);
+    // Если уже набрали больше элементов, чем лучший найденный вариант, прекращаем
+    if (bestSolution !== null && current.length >= bestSolution.length) return;
+    // Мемоизация: если для текущей маски уже найдено решение с меньшим или равным числом импликант, прерываем
+    if (memo.has(currentMask) && memo.get(currentMask)! <= current.length) return;
+    memo.set(currentMask, current.length);
+
+    for (let i = start; i < implicants.length; i++) {
+      const newMask = currentMask | implicants[i].mask;
+      if (newMask === currentMask) continue;
+      current.push(implicants[i].imp);
+      dfs(newMask, i + 1, current);
+      current.pop();
     }
   }
-  backtrack([], 0, new Set<number>());
-  return minCover.sort(); // ['-10-', '0-11', '10-1']
+
+  dfs(0, 0, []);
+
+  return bestSolution ? (bestSolution as string[]).sort() : [];
 }
 
-// Проверяет, покрывает ли импликант набор
 function isCovered(set1: string, implicant: string): boolean {
   for (let i = 0; i < set1.length; i++) {
     if (implicant[i] !== '-' && implicant[i] !== set1[i]) {
@@ -153,17 +167,16 @@ function isCovered(set1: string, implicant: string): boolean {
   return true;
 }
 
-// Функция, которая превращает минимальный набор простых импликант, покрывающих sets1, в ДНФ
 function formatDNF(coverage: string[]): string {
   const minDNF: string[] = [];
   for (const st of coverage) {
     const term: string[] = [];
     for(let i = 0; i < st.length; i++) {
       const variable = `x${i+1}`;
-      if(st[i]=== '1') term.push(variable);
-      if(st[i]=== '0') term.push(`-${variable}`);
+      if(st[i] === '1') term.push(variable);
+      if(st[i] === '0') term.push(`-${variable}`);
     }
     minDNF.push(`(${term.join(' * ')})`);
   }
-  return minDNF.join(' v ') || "0"; // '(x2 * -x3) v (x1 * -x2 * x4) v (-x1 * x3 * x4)'
+  return minDNF.join(' v ') || "0";
 }
