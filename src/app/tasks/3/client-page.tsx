@@ -17,7 +17,7 @@ export default function Task3Form() {
   const handleClick = safe(() => {
     if (!zeroResidual) throw new Error('Введите нулевую остаточную');
     if (!oneResidual) throw new Error('Введите единичную остаточную');
-    if (!argIndex) throw new Error('Введите номер остаточной');
+    if (!argIndex) throw new Error('Введите номер аргумента');
     setResult(solveTask3(zeroResidual, oneResidual, argIndex));
   });
 
@@ -50,7 +50,7 @@ export default function Task3Form() {
         <li>Ограничение: не должен превышать <b>5</b></li>
         <li>Ограничение: не должен превышать количество аргументов ожидаемой булевой функции</li>
       </ul>
-      <CustomNumberInput placeholder="Введите номер остаточной" value={argIndex} setValue={setArgIndex} min={1} />
+      <CustomNumberInput placeholder="Введите номер аргумента" value={argIndex} setValue={setArgIndex} min={1} />
 
       <CustomButton onClick={handleClick}>Продолжить</CustomButton>
 
