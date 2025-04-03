@@ -7,12 +7,14 @@ import CustomInput from '@/components/custom-input';
 import Results from '@/components/results';
 
 import { solveTask12OnServer } from '@/app/tasks/12/server-actions';
+import { assertBooleanVector } from '@/utils/asserts';
 
 export default function Task12Form() {
   const [vector, setVector] = useState('');
   const [result, setResult] = useState<string>();
 
   const handleClick = safe(async () => {
+    assertBooleanVector(vector);
     const result = await solveTask12OnServer(vector);
     if (typeof result === 'object') throw new Error(result.error);
     setResult(result);
