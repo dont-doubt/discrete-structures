@@ -1,15 +1,16 @@
 import { twMerge } from 'tailwind-merge';
 import clsx, { ClassArray } from 'clsx';
 import { toast } from 'sonner';
+import { Promisable } from '@/utils/types';
 
 export function cn(...inputs: ClassArray) {
   return twMerge(clsx(inputs));
 }
 
-export function safe(fn: () => void): () => void {
-  return () => {
+export function safe(fn: () => Promisable<void>): () => Promise<void> {
+  return async () => {
     try {
-      fn();
+      await fn();
     } catch (e: any) {
       toast.error(e?.message || 'Произошла неизвестная ошибка');
     }

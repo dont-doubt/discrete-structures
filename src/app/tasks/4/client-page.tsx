@@ -3,13 +3,11 @@
 import { useState } from 'react';
 import { randomInt, safe } from '@/utils';
 import CustomButton from '@/components/custom-button';
-import { solveTask1 } from '@/tasks/task1';
 import { Selectable } from '@/components/selectable';
 import { functionNames } from '@/tasks/task4';
 import { toast } from 'sonner';
 
 export default function Task4Form() {
-  const [result, setResult] = useState<string>();
   const [vector, setVector] = useState<number>();
   const [selected, setSelected] = useState<number>();
 

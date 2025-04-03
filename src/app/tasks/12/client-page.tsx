@@ -5,14 +5,17 @@ import { safe } from '@/utils';
 import CustomButton from '@/components/custom-button';
 import CustomInput from '@/components/custom-input';
 import Results from '@/components/results';
-import { solveTask12 } from '@/tasks/task12';
+
+import { solveTask12OnServer } from '@/app/tasks/12/server-actions';
 
 export default function Task12Form() {
   const [vector, setVector] = useState('');
   const [result, setResult] = useState<string>();
 
-  const handleClick = safe(() => {
-    setResult(solveTask12(vector));
+  const handleClick = safe(async () => {
+    const result = await solveTask12OnServer(vector);
+    if (typeof result === 'object') throw new Error(result.error);
+    setResult(result);
   });
 
   return (
