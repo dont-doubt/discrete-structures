@@ -54,17 +54,16 @@ export default function Task11Form() {
   return (
     <>
       <h1>Задание 11</h1>
-      <h2>Система предлагает <b>n</b> векторов булевых функций. Пользователь должен определить полным или нет является этот
-        набор функций</h2>
+      <h2>Система предлагает векторы булевых функций, пользователь определяет полноту или предполные классы</h2>
 
       <CustomButton onClick={handleGenerate}>Начать</CustomButton>
 
       {vectors && (
         <>
-          <h2 className="!pt-100">Выберите полноту функции и (или) её предполные классы</h2>
+          <h2 className="!pt-50">Выберите полноту функции и (или) её предполные классы</h2>
           <pre className="text-wrap">{`{${vectors.join(', ')}}`}</pre>
           <div className="flex flex-wrap gap-4">
-            <Selectable value={full} setValue={setFull} className="me-20">Полная</Selectable>
+            <Selectable value={full} setValue={setFull} className="me-10">Полная</Selectable>
             {!full && (
               <>
                 <Selectable value={T0} setValue={setT0}>T0</Selectable>

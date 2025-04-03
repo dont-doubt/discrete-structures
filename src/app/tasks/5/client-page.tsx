@@ -56,14 +56,14 @@ export default function Task5Form() {
   return (
     <>
       <h1>Задание 5</h1>
-      <h2>Система предлагает рандомный вектор булевой функции от <b>n</b> аргументов. Пользователь выбирает фиктивные аргументы</h2>
+      <h2>Система предлагает вектор булевой функции от <b>n</b> аргументов, пользователь выбирает фиктивные аргументы</h2>
 
       <CustomNumberInput placeholder="Введите n" value={args} setValue={setArgs} />
       <CustomButton onClick={handleFirstClick}>Начать</CustomButton>
 
       {vector && (
         <>
-          <h2 className="!pt-100">Выберите <b>фиктивные</b> аргументы:</h2>
+          <h2 className="!pt-50">Выберите <b>фиктивные</b> аргументы:</h2>
           <pre>{vector}</pre>
           <VectorPicker fictive={fictive} setFictive={setFictive} vector={vector} />
           <CustomButton onClick={handleClick}>Проверить</CustomButton>

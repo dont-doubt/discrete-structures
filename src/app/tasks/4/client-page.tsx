@@ -17,6 +17,7 @@ export default function Task4Form() {
   });
 
   const handleClick = safe(() => {
+    if (selected === undefined) throw new Error('Выберите название функции');
     if (selected === vector) {
       toast.success('Правильно!');
     } else {
@@ -29,12 +30,12 @@ export default function Task4Form() {
   return (
     <>
       <h1>Задание 4</h1>
-      <h2>Система предлагает рандомный вектор булевой функции от 2 аргументов и 16 блоков с «именами» функций.</h2>
+      <h2>Система предлагает вектор булевой функции от 2 аргументов, пользователь выбирает имя функции</h2>
       <CustomButton onClick={handleGenerate}>Начать</CustomButton>
 
       {vector !== undefined && (
         <>
-          <h4 className="!pt-100">Выберите тип вектора булевой функции:</h4>
+          <h4 className="!pt-20">Выберите тип вектора булевой функции:</h4>
           <pre>{Object.keys(functionNames)[vector]}</pre>
           <div className="flex flex-col gap-y-4 my-10">
             {Array.from({length: 16}).map((_, i) => (

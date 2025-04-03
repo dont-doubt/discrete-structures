@@ -45,13 +45,13 @@ export default function Task10Form() {
   return (
     <>
       <h1>Задание 10</h1>
-      <h2>Система предлагает вектор булевой функции. Пользователь должен выбрать предполные классы, к которым принадлежит функция</h2>
+      <h2>Система предлагает вектор булевой функции, пользователь определяет предполные классы</h2>
 
       <CustomButton onClick={handleGenerate}>Начать</CustomButton>
 
       {vector && (
         <>
-          <h2 className="!pt-100">Выберите предполные классы</h2>
+          <h2 className="!pt-50">Выберите предполные классы</h2>
           <pre>{vector}</pre>
           <div className="flex flex-wrap gap-4">
             <Selectable value={T0} setValue={setT0}>T0</Selectable>
