@@ -56,7 +56,7 @@ export default function Task5Form() {
   return (
     <>
       <h1>Задание 5</h1>
-      <h2>Система предлагает рандомный вектор булевой функции от n аргументов. Пользователь выбирает фиктивные аргументы</h2>
+      <h2>Система предлагает рандомный вектор булевой функции от <b>n</b> аргументов. Пользователь выбирает фиктивные аргументы</h2>
 
       <CustomNumberInput placeholder="Введите n" value={args} setValue={setArgs} />
       <CustomButton onClick={handleFirstClick}>Начать</CustomButton>
