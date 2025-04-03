@@ -31,6 +31,7 @@ export default function Task3Form() {
       <ul>
         <li>Вектор должен состоять из <b>0</b> и <b>1</b></li>
         <li>Запись в формате <b>01010101</b></li>
+        <li>Длины векторов остаточных должны совпадать</li>
       </ul>
       <CustomInput placeholder="Введите нулевую остаточную" value={zeroResidual} setValue={setZeroResidual} regex={/^[01]*$/} />
 
@@ -38,10 +39,15 @@ export default function Task3Form() {
       <ul>
         <li>Вектор должен состоять из <b>0</b> и <b>1</b></li>
         <li>Запись в формате <b>01010101</b></li>
+        <li>Длины векторов остаточных должны совпадать</li>
       </ul>
       <CustomInput placeholder="Введите единичную остаточную" value={oneResidual} setValue={setOneResidual} regex={/^[01]*$/} />
 
-      <h4>Введите номер остаточной:</h4>
+      <h4>Введите номер аргумента:</h4>
+      <ul>
+        <li>Для <b>x<sub>n</sub></b> аргумента, введите <b>n</b></li>
+        <li>Номер указанного аргумента - целое положительное число, не превышающее количество аргументов остаточных</li>
+      </ul>
       <CustomNumberInput placeholder="Введите номер остаточной" value={argIndex} setValue={setArgIndex} min={1} />
 
       <CustomButton onClick={handleClick}>Продолжить</CustomButton>
