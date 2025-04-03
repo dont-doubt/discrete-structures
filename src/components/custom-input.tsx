@@ -15,7 +15,7 @@ export default function CustomInput({label, className, type = "text", setValue, 
         const v = e.target.value;
         if (!regex || regex.test(v)) setValue(e.target.value)
       } : undefined}
-      value={value || ''}
+      value={value ?? ''}
       {...props}
     />
   )

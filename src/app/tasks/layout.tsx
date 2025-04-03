@@ -55,9 +55,11 @@ function Navigation({selected, setSelected, setHidden, setMenuOpen}: {
             key={path}
             isSelected={path === selected}
             onClick={() => {
-              setMenuOpen(false);
-              setHidden(true);
-              setSelected(path);
+              if (path !== selected) {
+                setMenuOpen(false);
+                setHidden(true);
+                setSelected(path);
+              }
             }}
           >
             Задание {i + 1}
@@ -77,7 +79,7 @@ function Main({selected, hidden, children}: {selected: string, hidden: boolean} 
         initial={{ opacity: 1 }}
         animate={{ opacity: hidden ? 0.4 : 1 }}
         transition={{ duration: 0.3, ease: 'circInOut' }}
-        className="flex flex-col min-w-700 mx-auto mt-170 prose prose-invert prose-slate max-lg:min-w-0 max-lg:px-30 z-10 max-lg:prose-lg max-lg:text-wrap"
+        className="flex flex-col min-w-700 mx-auto mt-170 prose prose-invert prose-slate max-lg:min-w-0 max-lg:px-30 z-10 max-lg:prose-sm max-lg:[&_*]:text-wrap max-lg:max-w-screen"
       >
         {children}
       </motion.main>

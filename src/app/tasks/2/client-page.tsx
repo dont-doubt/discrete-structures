@@ -37,7 +37,7 @@ export default function Task2Form() {
       <ul>
         <li><b>0</b> или <b>1</b> – нулевая или единичная остаточная соответственно</li>
       </ul>
-      <CustomInput placeholder="Введите тип остаточной" value={type} setValue={setType} regex={/^[01]$/}/>
+      <CustomInput placeholder="Введите тип остаточной" value={type} setValue={setType} regex={/^[01]?$/}/>
       <h4>Введите номер аргумента булевой функции:</h4>
       <ul>
         <li>Для <b>x<sub>n</sub></b> аргумента, введите <b>n</b></li>

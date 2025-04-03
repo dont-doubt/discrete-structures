@@ -27,7 +27,7 @@ export default function CustomNumberInput({label, className, setValue, min, max,
       min={min}
       max={max}
       step={step}
-      value={innerValue ?? ''}
+      value={innerValue}
       onChange={(e) => {
         const v = parseInt(e.target.value);
         setInnerValue(isNaN(v) ? undefined : v);

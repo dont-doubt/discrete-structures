@@ -42,7 +42,7 @@ export default function Task7Form() {
               переменной, <b>x2</b> – для второй и так далее;</li>
             <li>Для обозначения конъюнкции нужно использовать «<b>*</b>», дизъюнкции – «<b>v</b>», отрицания «<b>-</b>»;</li>
             <li>Пробелы ставить не нужно</li>
-            <li>Пример: <b>(x1*x2)v(x2*-x3)</b></li>
+            <li>Пример: <b>(x1vx2)*(x2v-x3)</b></li>
           </ul>
           <CustomInput placeholder="Введите ДНФ" value={userInput} setValue={setUserInput} regex={/^[vx12345()\-* ]*$/} />
           <CustomButton onClick={handleClick}>Проверить</CustomButton>
