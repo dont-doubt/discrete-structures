@@ -8,7 +8,7 @@ export default function CustomButton({children, className, disabled, onClick}: {
   return (
     <button
       className={cn(
-        "bg-emerald-600 px-20 py-6 flex items-center justify-center text-center text-nowrap rounded-xl transition-colors hover:bg-emerald-500 active:bg-emerald-600 shadow-lg shadow-emerald-500/20 cursor-pointer outline-none [.prose_&]:mt-20",
+        "bg-emerald-600 px-20 py-6 flex items-center justify-center text-center text-nowrap rounded-xl transition-colors hover:bg-emerald-500 active:bg-emerald-600 shadow-lg shadow-emerald-500/20 cursor-pointer outline-none [.prose_&]:mt-20 text-white",
         disabled && "opacity-50",
         className
       )}

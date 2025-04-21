@@ -3,13 +3,14 @@ import "./globals.css";
 import { Children } from '@/utils/types';
 import { Toaster } from "sonner";
 import { Viewport } from "next";
+import Providers from "@/components/providers";
 
 export const metadata = {
   title: {
     absolute: '⇱ Дискретные структуры',
     template: "⇱ %s – Дискретные структуры",
   },
-  description: 'Топ 12 самых необычных заданий, которые могут предложить Дискретные структуры',
+  description: 'Топ 12 необычных заданий, которые могут предложить Дискретные структуры',
 }
 
 export const viewport: Viewport = {
@@ -21,10 +22,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({children}: Children) {
   return (
-    <html lang="ru">
+    <html lang="ru" suppressHydrationWarning>
       <body className={fonts}>
-        <Toaster position="top-center" theme="dark" richColors />
-        {children}
+        <Providers>
+          <Toaster position="top-center" theme="dark" richColors />
+          {children}
+        </Providers>
       </body>
     </html>
   );

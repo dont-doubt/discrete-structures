@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
 
+@custom-variant dark (html.dark &);
+
 @font-face {
   font-family: 'TGrotesk-R';
   src: url('https://static.tildacdn.com/tild6532-3066-4866-a231-633439376637/TransgenderGrotesk-R.woff2') format('woff2'),url('https://static.tildacdn.com/tild3033-3833-4634-a161-363032336635/TransgenderGrotesk-R.woff') format('woff');
@@ -26,6 +28,8 @@
 
   --font-family-inter: var(--font-inter);
   --font-family-grotesk: 'TGrotesk-R';
+  --rotate-italic: -9.5deg;
+  --tracking-default: 0.00em;
 }
 
 @layer base {
@@ -34,8 +38,11 @@
   }
 
   html {
-    color-scheme: dark;
+    color-scheme: light;
     overflow-x: hidden;
+  }
+  html.dark {
+    color-scheme: dark;
   }
 
   body {
@@ -44,6 +51,7 @@
     overflow-y: scroll;
     background-color: #F8F8F8;
     height: 100vh;
+    letter-spacing: var(--tracking-default);
   }
 
   input[type="number"]::-webkit-outer-spin-button,
@@ -62,36 +70,36 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #1e1e1e;
+    @apply bg-[#f6f6f6] dark:bg-[#1e1e1e]
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #555;
+    @apply bg-[#999] hover:bg-[#555] dark:hover:bg-[#888] dark:bg-[#555] border-2 border-[color:#1e1e1e];
     border-radius: 10px;
-    border: 2px solid #1e1e1e;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #888;
   }
 
   * {
     scrollbar-width: thin;
+    scrollbar-color: #f1f1f1 #c1c1c1;
+  }
+  html.dark * {
     scrollbar-color: #555 #1e1e1e;
   }
 
   .prose {
-    ul {
-      @apply !mt-0
-    }
+    ul {@apply !mt-0}
+    h2 {@apply !mt-10}
+    b {@apply text-emerald-500}
+  }
+}
 
-    h2 {
-      @apply !mt-10
-    }
-
-    b {
-      @apply text-emerald-500
-    }
+@layer components {
+  .text-outline {
+    text-shadow:
+        calc(-1 * var(--outline-width)) 0 var(--outline-color),
+        var(--outline-width) 0 var(--outline-color),
+        0 calc(-1 * var(--outline-width)) var(--outline-color),
+        0 var(--outline-width) var(--outline-color);
   }
 }
 
