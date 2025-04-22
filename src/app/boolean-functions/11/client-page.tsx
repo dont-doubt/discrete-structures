@@ -60,7 +60,7 @@ export default function Task11Form() {
   });
 
   function isCorrect(selected: boolean, name: string): boolean | undefined {
-    if (!answered) return undefined;
+    if (!answered || full) return undefined;
     if (expected === 'full') return selected ? false : undefined;
     if (expected.includes(name)) return true;
     if (selected ? !expected.includes(name) : expected.includes(name)) return false;
@@ -81,11 +81,11 @@ export default function Task11Form() {
           <div className="flex flex-wrap gap-14">
             <Selectable value={full} setValue={setFull} disabled={answered} correct={answered ? expected === 'full' ? true : isFull() ? false : undefined : undefined}>Полная</Selectable>
             <div className={cn("transition-opacity flex flex-wrap gap-4", full && !answered && "opacity-0 pointer-events-none")}>
-              <Selectable value={T0} setValue={setT0} disabled={answered} correct={isCorrect(T0, 'T0')}>T0</Selectable>
-              <Selectable value={T1} setValue={setT1} disabled={answered} correct={isCorrect(T1, 'T1')}>T1</Selectable>
-              <Selectable value={S} setValue={setS} disabled={answered} correct={isCorrect(S, 'S')}>S</Selectable>
-              <Selectable value={M} setValue={setM} disabled={answered} correct={isCorrect(M, 'M')}>M</Selectable>
-              <Selectable value={L} setValue={setL} disabled={answered} correct={isCorrect(L, 'L')}>L</Selectable>
+              <Selectable value={!full && T0} setValue={setT0} disabled={answered} correct={isCorrect(T0, 'T0')}>T0</Selectable>
+              <Selectable value={!full && T1} setValue={setT1} disabled={answered} correct={isCorrect(T1, 'T1')}>T1</Selectable>
+              <Selectable value={!full && S} setValue={setS} disabled={answered} correct={isCorrect(S, 'S')}>S</Selectable>
+              <Selectable value={!full && M} setValue={setM} disabled={answered} correct={isCorrect(M, 'M')}>M</Selectable>
+              <Selectable value={!full && L} setValue={setL} disabled={answered} correct={isCorrect(L, 'L')}>L</Selectable>
             </div>
           </div>
           <CustomButton onClick={handleClick} disabled={answered}>Проверить</CustomButton>

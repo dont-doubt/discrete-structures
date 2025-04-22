@@ -39,7 +39,7 @@ export default function Task4Form() {
 
       {vector !== undefined && (
         <>
-          <h4 className="!pt-20">Выберите тип вектора булевой функции:</h4>
+          <h4 className="!pt-20">Выберите имя вектора булевой функции:</h4>
           <pre>{Object.keys(functionNames)[vector]}</pre>
           <div className="flex flex-col gap-y-4 my-10">
             {Array.from({length: 16}).map((_, i) => (

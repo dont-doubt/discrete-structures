@@ -13,7 +13,7 @@ export default function HintedTitle({title, children}: {title: string} & Childre
           </div>
         </h1>
       </DialogTrigger>
-      <DialogContent className="[--spacing:0.25rem] lg:max-w-screen-lg overflow-y-scroll max-h-screen font-family-inter">
+      <DialogContent className="[--spacing:0.25rem] lg:max-w-screen-lg overflow-y-scroll max-h-screen min-h-screen font-family-inter">
         <DialogHeader className="text-start px-2">
           <DialogTitle className="text-2xl font-bold">{title}<span className="opacity-50">&nbsp;&nbsp;–&nbsp;&nbsp;теория</span></DialogTitle>
         </DialogHeader>
